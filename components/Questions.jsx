@@ -6,20 +6,23 @@ export default function Questions({ setAnswer, question }) {
 
   return (
     <View style={styles.container}>
-      <Text style={{fontSize:40,color:'#fff'}}>Hi there</Text>
+      <Text style={{fontSize:40,color:'#fff'}}>Hi there!</Text>
       <Text style={{fontSize:20, color:'#fff'}}>How are you feeling today?</Text>
-      <View style={{flexDirection:'row', backgroundColor:'#8F30A1', justifyContent:'space-between', paddingTop:20}}>
-        <AnswerButton displayText='🤩 Adventurous!'/>
-        <AnswerButton displayText='🥱 A bit tired...'/>
+      <View style={{flexDirection:'row', backgroundColor:'#8F30A1', justifyContent:'space-between', paddingTop:10}}>
+        <AnswerButton emoji='🤩' displayText='Adventurous!'/>
+        <AnswerButton emoji='🥱' displayText='A bit tired...'/>
       </View>
     </View>
   );
 }
 
-function AnswerButton({displayText}){
+function AnswerButton({emoji, displayText}){
     return (
-        <TouchableOpacity style={{backgroundColor:'#fff', padding:13, borderRadius:50}}>
-            <Text style={{fontSize:17}}>{displayText}</Text>
+        <TouchableOpacity style={{
+            backgroundColor:'#fff', 
+            flexDirection:'row', alignItems:'center', justifyContent:'flex-start', 
+            padding:5, paddingLeft:8, borderRadius:50, width:'48%'}}>
+            <Text style={{fontSize:30,}}>{emoji}</Text><Text style={{fontSize:17,}}>{' ' + displayText}</Text>
         </TouchableOpacity>
     )
 }

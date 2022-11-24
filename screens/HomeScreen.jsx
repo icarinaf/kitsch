@@ -1,23 +1,26 @@
-import { StyleSheet } from 'react-native';
+import {Text, View,  StyleSheet, ScrollView } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
+import Feed from '../components/Feed';
 import Questions from '../components/Questions';
-import { Text, View } from '../components/Themed';
+import Searchbar from '../components/Searchbar';
 import { RootTabScreenProps } from '../types';
 
 export default function HomeScreen({ navigation }) {
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
       <Questions />
-    </View>
+      <Searchbar />
+      <Feed />
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'flex-start',
+    backgroundColor:'white',
   },
   title: {
     fontSize: 20,
