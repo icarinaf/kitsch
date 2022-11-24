@@ -20,6 +20,8 @@ import CameraScreen from '../screens/CameraScreen';
 import MapScreen from '../screens/MapScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -62,7 +64,7 @@ function BottomTabNavigator() {
     <BottomTab.Navigator
       initialRouteName="Home"
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
+        tabBarActiveTintColor: '#8F30A1'//Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
         name="Home"
@@ -70,7 +72,7 @@ function BottomTabNavigator() {
         options={({ navigation }: RootTabScreenProps<'Home'>) => ({
           title: 'Home',
           headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="home-outline" size={40} color={color} />,
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate('Modal')}
