@@ -6,7 +6,7 @@ import Questions from '../components/Questions';
 import Searchbar from '../components/Searchbar';
 import { RootTabScreenProps } from '../types';
 
-export default function HomeScreen({ navigation }) {
+export default function HomeScreen() {
   return (
     <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
       <Questions />

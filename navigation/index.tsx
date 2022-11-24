@@ -21,6 +21,7 @@ import MapScreen from '../screens/MapScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import PlaceDetailScreen from '../screens/PlaceDetailScreen';
 
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
@@ -51,6 +52,14 @@ function RootNavigator() {
   );
 }
 
+function FeedNavigator(){
+  return (
+    <Stack.Navigator>
+    <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+    <Stack.Screen name="PlaceDetail" component={PlaceDetailScreen} options={{ headerShown: false }} />
+  </Stack.Navigator>
+  )
+}
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
  * https://reactnavigation.org/docs/bottom-tab-navigator
@@ -67,8 +76,8 @@ function BottomTabNavigator() {
         tabBarActiveTintColor: '#8F30A1'//Colors[colorScheme].tint,
       }}>
       <BottomTab.Screen
-        name="Home"
-        component={HomeScreen}
+        name="HomeStack"
+        component={FeedNavigator}
         options={({ navigation }: RootTabScreenProps<'Home'>) => ({
           title: 'Home',
           headerShown: false,
