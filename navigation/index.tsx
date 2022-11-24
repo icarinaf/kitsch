@@ -21,7 +21,10 @@ import MapScreen from '../screens/MapScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
+import { Ionicons } from '@expo/vector-icons'; 
+
 import PlaceDetailScreen from '../screens/PlaceDetailScreen';
+import ReviewDetailScreen from '../screens/ReviewDetailSceen';
 
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
@@ -57,6 +60,7 @@ function FeedNavigator(){
     <Stack.Navigator>
     <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
     <Stack.Screen name="PlaceDetail" component={PlaceDetailScreen} options={{ headerShown: false }} />
+    <Stack.Screen name="reviewDetail" component={ReviewDetailScreen} options={{ headerShown: false }} />
   </Stack.Navigator>
   )
 }
@@ -104,16 +108,16 @@ function BottomTabNavigator() {
         options={{
           title: 'Events',
           headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="calendar-blank" size={36} style={{marginBottom:-5}} color={color} />,
         }}
       />
       <BottomTab.Screen
         name="Camera"
         component={CameraScreen}
         options={{
-          title: 'Camera',
+          title: 'Review',
           headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) =>  <Ionicons name="md-camera-outline" size={40} color={color} />,
         }}
       />
       <BottomTab.Screen
@@ -122,7 +126,7 @@ function BottomTabNavigator() {
         options={{
           title: 'Map',
           headerShown: false,
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="map-marker-outline" size={36} style={{marginBottom:-5}} color={color} />,
         }}
       />
     </BottomTab.Navigator>
