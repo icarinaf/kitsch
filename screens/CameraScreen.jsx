@@ -29,9 +29,7 @@ export default function CameraScreen() {
     }
   }
 
-  React.useEffect(() => {
-    getPlaces();
-  }, []);
+
 
   return (
     <View style={styles.container}>
