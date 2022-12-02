@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
+import { supabase } from '../supabase';
 
 export default function CameraScreen() {
   const [camera, setCamera] = useState({
@@ -27,6 +28,17 @@ export default function CameraScreen() {
         name: "China Live Signature"
       });
       console.log("supabase add place function", error);
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  const updatePlace = async() => {
+    try {
+      const {error} = await supabase.from('Recommendation Items').update({
+        rating: 4.8
+      }).eq('id', 11);
+      console.log("supabase update place function", error);
     } catch (err) {
       console.error(err);
     }
