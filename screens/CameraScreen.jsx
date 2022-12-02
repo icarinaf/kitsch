@@ -40,7 +40,7 @@ export default function CameraScreen() {
   } else {
     return (
       <View style={{ flex: 1 }}>
-        <Camera style={{ flex: 1 }} type={camera.type}>
+        <Camera style={{ flex: 1, alignItems:'center'}} type={camera.type}>
           <View
             style={{
               flex: 1,
@@ -52,6 +52,7 @@ export default function CameraScreen() {
                 flex: 0.1,
                 alignSelf: 'flex-end',
                 alignItems: 'center',
+
               }}
               onPress={() => {
                setCamera({
@@ -71,52 +72,6 @@ export default function CameraScreen() {
   }
 }
 
-
-// export default function App() {
-//   const [type, setType] = useState(CameraType.back);
-//   const [permission, requestPermission] = Camera.useCameraPermissions();
-
-//   // if (!permission) ... 
-
-//   // if (!permission.granted) ... 
-
-//   function toggleCameraType() {
-//     setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
-//   }
-
-//   return (
-//     <View style={styles.container}>
-//       <Camera style={styles.camera} type={type}>
-//         <View style={styles.buttonContainer}>
-//           <TouchableOpacity style={styles.button} onPress={toggleCameraType}>
-//             <Text style={styles.text}>Flip Camera</Text>
-//           </TouchableOpacity>
-//         </View>
-//       </Camera>
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     height:'100%', 
-//     width:'100%', 
-//     backgroundColor:'purple'
-//   },
-//   camera: {
-//     width:'100%', 
-//     height:500
-//   },
-//   buttonContainer: {
-//     backgroundColor:'red'
-//   },
-//   button:{
-//     backgroundColor:'green'
-//   },
-//   text:{
-//     color:'black'
-//   }
-// });
 
 
 // import { StyleSheet } from 'react-native';
