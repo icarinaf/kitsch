@@ -10,7 +10,7 @@ import React, { useEffect, useState } from 'react';
 
 export default function HomeScreen() {
     let questions = [
-      {Q: 'How are you feeling today?', A:[{emoji:'🤩', text:'Advenrturous!'}, {emoji:'🥱', text:'A bit tired...'}]},
+      {Q: 'How are you feeling today?', A:[{emoji:'🤩', text:'Adventurous!'}, {emoji:'🥱', text:'A bit tired...'}]},
       {Q: 'Do you prefer to stay...', A:[{emoji:'🧗‍♀️', text:'Outdoors'}, {emoji:'🎨', text:'Indoors'}]},
 
     ]
