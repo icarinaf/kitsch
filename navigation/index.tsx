@@ -88,7 +88,7 @@ function BottomTabNavigator() {
         options={({ navigation }: RootTabScreenProps<'Home'>) => ({
           title: 'Home',
           headerShown: false,
-          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="home-outline" size={40} color={color} />,
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="home-outline" size={40}  style={{marginBottom:-10}} color={color} />,
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate('Modal')}
@@ -111,7 +111,7 @@ function BottomTabNavigator() {
         options={{
           title: 'Events',
           headerShown: false,
-          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="calendar-blank" size={36} style={{marginBottom:-5}} color={color} />,
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="calendar-blank" size={36} style={{marginBottom:-10}} color={color} />,
         }}
       />
       <BottomTab.Screen
@@ -120,7 +120,7 @@ function BottomTabNavigator() {
         options={{
           title: 'Review',
           headerShown: false,
-          tabBarIcon: ({ color }) =>  <Ionicons name="md-camera-outline" size={40} color={color} />,
+          tabBarIcon: ({ color }) =>  <Ionicons name="md-camera-outline" size={40} style={{marginBottom:-10}} color={color} />,
         }}
       />
       <BottomTab.Screen
@@ -129,7 +129,7 @@ function BottomTabNavigator() {
         options={{
           title: 'Map',
           headerShown: false,
-          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="map-marker-outline" size={36} style={{marginBottom:-5}} color={color} />,
+          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="map-marker-outline" size={36} style={{marginBottom:-10}} color={color} />,
         }}
       />
     </BottomTab.Navigator>
