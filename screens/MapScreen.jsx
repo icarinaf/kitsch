@@ -1,14 +1,21 @@
-import { StyleSheet } from 'react-native';
 
-import EditScreenInfo from '../components/EditScreenInfo';
-import { Text, View } from '../components/Themed';
+import Searchbar from '../components/Searchbar';
+import React from 'react';
+import MapView from 'react-native-maps';
+import { StyleSheet, View } from 'react-native';
 
-export default function MapScreen() {
+export default function App() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Map Screen</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      {/* <EditScreenInfo path="/screens/TabTwoScreen.tsx" /> */}
+       <View style={{backgroundColor:'#8F30A1', width:'100%', alignItems:'center', paddingBottom:10, paddingTop:40}}>
+         <Searchbar white/>
+       </View>
+      <MapView style={styles.map} region={{
+        latitude: 37.4275, 
+        longitude: -122.1697,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.005,
+      }} />
     </View>
   );
 }
@@ -16,16 +23,9 @@ export default function MapScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  map: {
+    width: '100%',
+    height: '100%',
   },
 });

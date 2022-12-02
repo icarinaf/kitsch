@@ -14,6 +14,7 @@ export default function EventsScreen() {
         <Searchbar white/>
       </View>
       <ScrollView style={{width:'100%'}} contentContainerStyle={{alignItems:'center', backgroundColor:'white', paddingBottom:50}}>
+        <Text style={{fontSize:30, fontWeight:'bold', paddingTop:20}}>Upcoming Events</Text>
         <EventCard />
         <EventCard />
         <EventCard />

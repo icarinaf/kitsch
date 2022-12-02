@@ -7,7 +7,7 @@ export default function Searchbar({white}){
     return (
         <View style={[styles.container, white ? {borderBottomColor:'#fff'}:{borderBottomColor:'#000'}]}>
             <MaterialIcons name='search' size={30} color={white ? 'white' : 'black'} style={{paddingRight:5}} />
-            <TextInput style={{fontSize:20, width:5000}} placeholderTextColor={white ? '#fff' : '#999'} placeholder="Search here..." />
+            <TextInput style={{fontSize:20, width:5000}} placeholderTextColor={white ? '#ccc' : '#999'} placeholder="Search here..." />
         </View>
     )
 }
