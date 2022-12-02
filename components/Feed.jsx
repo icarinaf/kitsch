@@ -4,19 +4,17 @@ import { useNavigation } from "@react-navigation/native";
 
 import { supabase } from "../supabase";
 import React from "react";
+import Price from "./Price";
 
-export default function Feed(){
+export default function Feed({itemData, feedOrder}){
+    // console.log('in feed,', itemData )
+    // console.log('filtering', 
+    // feedOrder.map(category=><FeedHorizontal title={category.title} data={itemData.filter(x=>x.category==category.tag)}/>)
+    
+    // )
     return (
         <View style={styles.container}>
-            <FeedHorizontal />
-            <FeedHorizontal />
-            <FeedHorizontal />
-            <FeedHorizontal />
-            <FeedHorizontal />
-            <FeedHorizontal />
-            <FeedHorizontal />
-            <FeedHorizontal />
-            <FeedHorizontal />
+            {feedOrder.map(category=><FeedHorizontal title={category.title} data={itemData.filter(x=>x.category==category.tag)}/>)}
         </View>
     )
 }
@@ -24,48 +22,33 @@ const styles = StyleSheet.create({
     container: {
         width:'100%', 
         paddingTop:20,
-        // flexDirection:'row',
-        // height:50, 
-        // paddingTop:50,
-        // padding: 10, 
-        // borderBottomWidth:1, 
-        // borderBottomColor:'#000',
-        // paddingBottom:15,
-        // backgroundColor: '#8F30A1',
     },
 });
 
-function FeedHorizontal(){
+function FeedHorizontal({title, data}){
+    // console.log('data in horizon', data, data.length)
     return(
         <View style={{paddingTop:20}}>
-            <Text style={{fontSize:30, paddingLeft:20, paddingBottom:10, fontWeight:'bold'}}>Top Eats</Text>
+            <Text style={{fontSize:30, paddingLeft:20, paddingBottom:10, fontWeight:'bold'}}>{title}</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{paddingLeft:20}}>
-                <FeedItem />
-                <FeedItem />
-
-                <FeedItem />
-
-                <FeedItem />
-
-                <FeedItem />
-
+                {data.map(item=> <FeedItem item={item}/>)}
             </ScrollView>
         </View>
     )
 }
 
 
-function FeedItem(){
+function FeedItem({item}){
     const navigation = useNavigation()
     return (
-        <TouchableOpacity style={{paddingRight:20}} onPress={()=>{navigation.navigate('PlaceDetail')}}>
-            <Image style={{width:230, height:150, borderRadius:15}} source={{uri:'https://assets0.dostuffmedia.com/uploads/aws_asset/aws_asset/6593230/691c8fde-bd07-44b1-8fad-7002a2b5a9f7.jpg'}}/>
+        <TouchableOpacity style={{paddingRight:20}} onPress={()=>{navigation.navigate('PlaceDetail', item)}}>
+            <Image style={{width:230, height:150, borderRadius:15}} source={{uri:item.thumbnail_url}}/>
             <View style={{padding:5}}>
                 <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                    <Text style={{fontSize:17, fontWeight:'bold'}}>China Live</Text>
-                    <Text><Ionicons name="md-star" size={15} color="orange" />3.9/4</Text>
+                    <Text style={{fontSize:17, fontWeight:'bold'}}>{item.name}</Text>
+                    <Text><Ionicons name="md-star" size={15} color="orange" />{item.rating}/5</Text>
                 </View>
-                <Text>0.9 mi ·10 min · $$</Text>
+                <Text>{item.mileage} mi ·{parseInt(item.distance)} min · <Price value={item.price}/></Text>
             </View>
         </TouchableOpacity>
     )

@@ -3,25 +3,32 @@ import { SafeAreaView, View, Text, ScrollView, StyleSheet, Image, TouchableOpaci
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Ionicons } from '@expo/vector-icons'; 
 import { useNavigation } from '@react-navigation/native';
+import Price from '../components/Price';
 
 
-export default function PlaceDetailScreen({navigation}) {
+export default function PlaceDetailScreen({navigation, route}) {
+    const {name, thumbnail_url, rating, mileage, price, distance} = route.params;
+    const stars = [];
+    for (let i = 1; i <= 5; i++){
+        if (i-0.5<=rating) {
+            stars.push(<Ionicons name="md-star" size={24} color="orange" />);
+        }else{
+            stars.push(<Ionicons name="md-star" size={24} color="grey" />);
+        }
+    }
+    
   return (
     <ScrollView contentContainerStyle={styles.container}>
-        <Image style={{width:'100%', height:300}} source={{uri:'https://assets0.dostuffmedia.com/uploads/aws_asset/aws_asset/6593230/691c8fde-bd07-44b1-8fad-7002a2b5a9f7.jpg'}}/>
+        <Image style={{width:'100%', height:300}} source={{uri:thumbnail_url}}/>
         <View style={{padding:20}}>
             <View style={{flexDirection:'row', justifyContent:'space-between'}}>
                 <View>
-                    <Text style={{fontSize:24, fontWeight:'bold'}}>Mission Dolores Park</Text>
+                    <Text style={{fontSize:24, fontWeight:'bold'}}>{name}</Text>
                     <Text> 
-                        <Ionicons name="md-star" size={24} color="orange" />
-                        <Ionicons name="md-star" size={24} color="orange" />
-                        <Ionicons name="md-star" size={24} color="orange" />
-                        <Ionicons name="md-star" size={24} color="orange" />
-                        <Ionicons name="md-star" size={24} color="grey" />
-                        {' '} 4.3/5
+                        {stars}
+                        {' '} {rating}/5
                     </Text>
-                    <Text>1.9 mi · 23 min · $ · <Text style={{color:"#999", textDecorationLine: 'underline'}}>Get Directions</Text></Text>
+                    <Text>{mileage} mi · {distance} min · <Price value={price}/> · <Text style={{color:"#999", textDecorationLine: 'underline'}}>Get Directions</Text></Text>
                 </View>
                 <TouchableOpacity style={{backgroundColor:'#000', width:70, height:70, justifyContent:'center', alignItems:'center', borderRadius:200}}>
                     <Ionicons name="md-camera-outline" size={40} color="white" />
