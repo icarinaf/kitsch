@@ -7,7 +7,7 @@ import Price from '../components/Price';
 
 
 export default function PlaceDetailScreen({navigation, route}) {
-    const {name, thumbnail_url, rating, mileage, price, distance} = route.params;
+    const {name, thumbnail_url, rating, mileage, price, distance, Reviews} = route.params;
     const stars = [];
     for (let i = 1; i <= 5; i++){
         if (i-0.5<=rating) {
@@ -16,6 +16,7 @@ export default function PlaceDetailScreen({navigation, route}) {
             stars.push(<Ionicons name="md-star" size={24} color="grey" />);
         }
     }
+
     
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -35,26 +36,18 @@ export default function PlaceDetailScreen({navigation, route}) {
                 </TouchableOpacity>
             </View>
         </View>
+        {Reviews == null ? null : 
         <View style={{paddingLeft:10, paddingRight:10, flexDirection:'row', justifyContent:'space-between'}}>
             <View style={{flex:1}}>
                 <Text style={{fontSize:24, fontWeight:'bold', marginBottom:20, marginLeft:10}}>Reviews</Text>
-                <ReviewItem />
-                <ReviewItem />
-                <ReviewItem />
-                <ReviewItem />
-                <ReviewItem />
-                <ReviewItem />
+                {Reviews.map((x, i)=>i % 2 == 0 ? <ReviewItem data={x}/> : null )}
             </View>
             <View style={{flex:1}}>
-                <ReviewItem />
-                <ReviewItem />
-                <ReviewItem />
-                <ReviewItem />
-                <ReviewItem />
-                <ReviewItem />
+                {Reviews.map((x, i)=>i % 2 == 1 ? <ReviewItem data={x}/> : null )}
             </View>
 
         </View>
+        }   
     </ScrollView>
   );
 }
@@ -78,21 +71,30 @@ const styles = StyleSheet.create({
   }
 });
 
+export function Rating({value}){
+    const stars = [];
+    for (let i = 1; i <= 5; i++){
+        if (i-0.5<=value) {
+            stars.push(<Ionicons name="md-star" size={24} color="orange" />);
+        }else{
+            stars.push(<Ionicons name="md-star" size={24} color="grey" />);
+        }
+    }
+    return stars
+}
 
-function ReviewItem(){
+function ReviewItem({data}){
     const navigation = useNavigation()
+    console.log(data)
+    const {created_at, rating, review, url, user} = data;
     return (
-        <TouchableOpacity onPress={()=>navigation.navigate('reviewDetail')} style={[{ marginLeft:10, marginRight:10, marginBottom:20, borderRadius:5, backgroundColor:'white'}, styles.boxShadow]}>
-            <Image style={{width:'100%', height:200, borderTopRightRadius:5, borderTopLeftRadius:5}} source={{uri:'https://assets0.dostuffmedia.com/uploads/aws_asset/aws_asset/6593230/691c8fde-bd07-44b1-8fad-7002a2b5a9f7.jpg'}}/>
+        <TouchableOpacity onPress={()=>navigation.navigate('reviewDetail', data)} style={[{ marginLeft:10, marginRight:10, marginBottom:20, borderRadius:5, backgroundColor:'white'}, styles.boxShadow]}>
+            <Image style={{width:'100%', height:200, borderTopRightRadius:5, borderTopLeftRadius:5}} source={{uri:url}}/>
             <View style={{padding:5}}>
                 <View style={{flexDirection:'row'}}>
-                    <Ionicons name="md-star" size={24} color="orange" />
-                    <Ionicons name="md-star" size={24} color="orange" />
-                    <Ionicons name="md-star" size={24} color="orange" />
-                    <Ionicons name="md-star" size={24} color="orange" />
-                    <Ionicons name="md-star" size={24} color="grey" />
+                    <Rating value={rating}/>
                 </View>
-                <Text style={{color:'#999', paddingLeft:10, paddingRight:0}}>Not bad</Text>
+                <Text style={{color:'#999', paddingLeft:10, paddingRight:0}}>{review.length > 24 ? review.slice(0, 21) + '...' : review}</Text>
             </View>
         </TouchableOpacity>
     )

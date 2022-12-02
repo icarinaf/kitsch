@@ -7,10 +7,11 @@ import Searchbar from '../components/Searchbar';
 import { RootTabScreenProps } from '../types';
 import { supabase } from '../supabase';
 import React, { useEffect, useState } from 'react';
+import History from '../components/History';
 
 export default function HomeScreen() {
     let questions = [
-      {Q: 'How are you feeling today?', A:[{emoji:'🤩', text:'Advenrturous!'}, {emoji:'🥱', text:'A bit tired...'}]},
+      {Q: 'How are you feeling today?', A:[{emoji:'🤩', text:'Adventurous!'}, {emoji:'🥱', text:'A bit tired...'}]},
       {Q: 'Do you prefer to stay...', A:[{emoji:'🧗‍♀️', text:'Outdoors'}, {emoji:'🎨', text:'Indoors'}]},
 
     ]
@@ -22,7 +23,7 @@ export default function HomeScreen() {
       if (answers.length >= 2){
         setAnswers([answer]);
       }else{
-        setAnswers(answers + [answer])
+        setAnswers(answers.concat(answer))
       }
       setCurrQuestion((currQuestion + 1) % 2);
     }
@@ -61,10 +62,18 @@ export default function HomeScreen() {
         getPlaces();
     }, []);
 
+    console.log('here', answers, Array(answers), answers.map((x, i)=>questions[x].A[i].emoji))
+
+
   return (
     <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
       <Questions question={questions[currQuestion]} setAnswer={answerQuestion}/>
-      <Searchbar />
+      <View style={{flexDirection:'row', paddingTop:5, paddingLeft:20, justifyContent:'flex-start'}}>
+        {answers.map((x, i)=><><History emoji={questions[i].A[x].emoji} answer={questions[i].A[x].text}/><Text>{' '}</Text></>)}
+      </View>
+      <View style={{paddingLeft:20, width:440}}>
+        <Searchbar/>
+      </View>
       <Feed feedOrder={feedOrder} itemData={itemData}/>
     </ScrollView>
   );
@@ -72,7 +81,7 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: 'center',
+    alignItems: 'flex-start',
     justifyContent: 'flex-start',
     backgroundColor:'white',
   },

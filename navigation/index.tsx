@@ -26,6 +26,8 @@ import { Ionicons } from '@expo/vector-icons';
 import PlaceDetailScreen from '../screens/PlaceDetailScreen';
 import ReviewDetailScreen from '../screens/ReviewDetailSceen';
 
+import { LogBox } from 'react-native';
+LogBox.ignoreAllLogs();//Ignore all log notifications
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
