@@ -5,8 +5,28 @@ import Feed from '../components/Feed';
 import Questions from '../components/Questions';
 import Searchbar from '../components/Searchbar';
 import { RootTabScreenProps } from '../types';
+import { supabase } from '../supabase';
+import React from 'react';
 
 export default function HomeScreen() {
+  const [itemData, setItemData] = React.useState({});
+    console.log(itemData)
+
+    const getPlaces = async() => {
+        try {
+            const {data, error} = await supabase.from('Items').select('*');
+            //console.log("supabase getPlaces data", data);
+            setItemData(data);
+            console.log("supabase error", error);
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    React.useEffect(() => {
+        getPlaces();
+    }, []);
+
   return (
     <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
       <Questions />

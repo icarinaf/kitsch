@@ -6,29 +6,8 @@ import { supabase } from "../supabase";
 import React from "react";
 
 export default function Feed(){
-    const getPlaces = async() => {
-        try {
-            const {data, error} = await supabase.from('Items').select('*');
-            console.log("supabase getPlaces data", data);
-            console.log("supabase error", error);
-        } catch (err) {
-            console.error(err);
-        }
-    }
-
-    React.useEffect(() => {
-        getPlaces();
-    }, []);
-
-    // const displayFeedHorizontals = () => {
-    //     for (var i = 0; i < data.size; i++) {
-    //         console.log(data[i]);
-    //     }
-    // }
-
     return (
         <View style={styles.container}>
-            {/* {displayFeedHorizontals()} */}
             <FeedHorizontal />
             <FeedHorizontal />
             <FeedHorizontal />
