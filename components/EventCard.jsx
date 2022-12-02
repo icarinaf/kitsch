@@ -19,7 +19,7 @@ export default function EventCard({data}){
 function CardFront(){
     return (
         <View style={{width:'100%', borderColor:'#ccc', height:'100%',borderRadius:20,  borderWidth:1,}}>
-            <Image style={{width:'100%', height:300, borderTopLeftRadius:19, borderTopRightRadius:19}} source={{uri:'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/flat-white-3402c4f.jpg'}}/>
+            <Image style={{width:'100%', height:300, borderTopLeftRadius:19, borderTopRightRadius:19}} source={{uri:'https://i.pinimg.com/originals/8a/81/49/8a81492a73aada04db10db77128701ed.jpg'}}/>
             <View style={{padding:20, paddingTop:10}}>
                 <Text style={{fontSize:25}}>Connor's Coffee Stand</Text>
                 <Text style={{fontSize:15}}>0.3 mi · 6 min · $</Text>
