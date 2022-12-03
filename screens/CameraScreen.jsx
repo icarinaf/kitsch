@@ -250,11 +250,11 @@ const CameraPreview = ({ photo, retakePicture, savePhoto }) => {
             >
               <Text
                 style={{
-                  color: "#fff",
+                  color: "#FFCA0E",
                   fontSize: 20
                 }}
               >
-                save photo
+                Next
               </Text>
             </TouchableOpacity>
           </View>
