@@ -30,18 +30,20 @@ export default function WriteReviewScreen({ photo, setPhotoConfirmed}){
     }
 
     const updatePlace = async(imgUrl, ratingNum, reviewText) => {
-      newData = {url: imgUrl, rating: ratingNum, review: reviewText};
+      newData = {url: imgUrl, rating: ratingNum, review: reviewText, user: "Ariana Grande", created_at: Date.now()};
       try {
-        const {data, err} = await supabase.from('Items').select('Reviews').eq('id', 5);
+        const {data, err} = await supabase.from('Items').select('Reviews').eq('id', 3);
+        var tempData = data[0].Reviews;
+        newData.id = Object.keys(tempData).length + 1;
+        console.log("supabase update place query error", err);
         // query the jsonb data from the url
-        console.log(data);
+        if (data[0].Reviews === null) tempData = [];
         // `data` should contain an array
-        data.push(newData);
-        console.log(data);
+        tempData.push(newData);
         const {error} = await supabase.from('Items').update({
-          Reviews: newData
-        }).eq('id', 5);
-        console.log("supabase update place function", error);
+          Reviews: tempData
+        }).eq('id', 3);
+        console.log("supabase update place error", error);
       } catch (err) {
         console.error(err);
       }
