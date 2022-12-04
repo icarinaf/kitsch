@@ -13,7 +13,7 @@ import {
 // import { Rating, AirbnbRating } from 'react-native-ratings';
 import { Ionicons } from '@expo/vector-icons'; 
 import Stars from 'react-native-stars';
-
+import { supabase } from "../supabase";
 
 
 
@@ -29,12 +29,30 @@ export default function WriteReviewScreen({ photo, setPhotoConfirmed}){
         console.log('done! navigate back')
     }
 
+    const updatePlace = async(imgUrl, ratingNum, reviewText) => {
+      newData = {url: imgUrl, rating: ratingNum, review: reviewText};
+      try {
+        const {data, err} = await supabase.from('Items').select('Reviews').eq('id', 5);
+        // query the jsonb data from the url
+        console.log(data);
+        // `data` should contain an array
+        data.push(newData);
+        console.log(data);
+        const {error} = await supabase.from('Items').update({
+          Reviews: newData
+        }).eq('id', 5);
+        console.log("supabase update place function", error);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
     const submitReview = ()=>{
-        // TODO: fill in this function
         console.log('photo:', photo.uri);
         console.log('rating:', rating);
         console.log('review:', reviewText);
-
+        updatePlace(photo.uri, rating, reviewText);
+        console.log("update reviews complete");
 
         // use this function to exit, I will edit later
         setDone();
