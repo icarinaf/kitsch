@@ -14,6 +14,8 @@ import {
 import { Ionicons } from '@expo/vector-icons'; 
 import Stars from 'react-native-stars';
 import { supabase } from "../supabase";
+import Moment from "react-moment";
+import moment from "moment";
 
 
 
@@ -30,11 +32,16 @@ export default function WriteReviewScreen({ photo, setPhotoConfirmed}){
     }
 
     const updatePlace = async(imgUrl, ratingNum, reviewText) => {
-      newData = {url: imgUrl, rating: ratingNum, review: reviewText, user: "Ariana Grande", created_at: Date.now()};
+      newData = {url: imgUrl, rating: ratingNum, review: reviewText, user: "Ariana Grande", created_at: moment().format('YYYY-MM-DD HH:mm:ss')};
       try {
         const {data, err} = await supabase.from('Items').select('Reviews').eq('id', 3);
         var tempData = data[0].Reviews;
-        newData.id = Object.keys(tempData).length + 1;
+        console.log(tempData);
+
+        if (tempData) newData.id = Object.keys(tempData).length + 1;
+        else newData.id = 1;
+
+        //newData.id = Object.keys(tempData).length + 1;
         console.log("supabase update place query error", err);
         // query the jsonb data from the url
         if (data[0].Reviews === null) tempData = [];
