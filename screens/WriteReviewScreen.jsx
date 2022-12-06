@@ -35,7 +35,7 @@ export default function WriteReviewScreen({ photo, setPhotoConfirmed}){
 
     const getLocations = async() => {
       try {
-        const {data, err} = await supabase.from('Items').select('name');
+        const {data, err} = await supabase.from('Items').select('id, name');
         console.log("supabase get locations query error", err);
         if (data.length > 0) setPlacesList(data);
       } catch (err) {
