@@ -3,11 +3,26 @@ import { SafeAreaView, Text, StyleSheet, View,  ScrollView} from 'react-native';
 import EditScreenInfo from '../components/EditScreenInfo';
 
 import { supabase } from '../supabase';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Searchbar from '../components/Searchbar';
 import EventCard from '../components/EventCard';
+import NotificationPopup from 'react-native-push-notification-popup';
+
 
 export default function EventsScreen() {
+
+  React.useEffect(() => {
+    this.popup.show({
+      onPress: function() {console.log('Pressed')},
+      // appIconSource: require('./assets/icon.jpg'),
+      appTitle: 'UnCover',
+      timeText: 'Now',
+      title: 'Hello World',
+      body: 'This is a sample message.\nTesting emoji 😀',
+      slideOutTime: 5000
+    });
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={{backgroundColor:'#8F30A1', width:'100%', alignItems:'center', paddingBottom:10, paddingTop:40}}>
@@ -20,6 +35,7 @@ export default function EventsScreen() {
         <EventCard />
         <EventCard />
       </ScrollView>
+      <NotificationPopup ref={ref => this.popup = ref} />
     </View>
   );
 }
