@@ -50,7 +50,6 @@ export default function HomeScreen() {
     const getPlaces = async() => {
         try {
             const {data, error} = await supabase.from('Items').select('*');
-            //console.log("supabase getPlaces data", data);
             setItemData(data);
             console.log("supabase error", error);
         } catch (err) {

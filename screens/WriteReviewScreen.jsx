@@ -14,8 +14,8 @@ import {
 import { Ionicons } from '@expo/vector-icons'; 
 import Stars from 'react-native-stars';
 import { supabase } from "../supabase";
-import Moment from "react-moment";
 import moment from "moment";
+import DropdownComponent from "../components/Dropdown";
 
 
 
@@ -26,9 +26,21 @@ export default function WriteReviewScreen({ photo, setPhotoConfirmed}){
     const [rating, setRating] = useState(0);
     const [reviewText, setReviewText] = useState('');
     const [locationName, setLocationName] = useState('Stanford University');
+    const [selectedPlace, setSelectedPlace] = useState('Stanford University');
+    const [placesList, setPlacesList] = useState([]);
 
     const setDone = ()=>{
         console.log('done! navigate back')
+    }
+
+    const getLocations = async() => {
+      try {
+        const {data, err} = await supabase.from('Items').select('name');
+        console.log("supabase get locations query error", err);
+        if (data.length > 0) setPlacesList(data);
+      } catch (err) {
+        console.log(err);
+      }
     }
 
     const updatePlace = async(imgUrl, ratingNum, reviewText) => {
@@ -41,7 +53,6 @@ export default function WriteReviewScreen({ photo, setPhotoConfirmed}){
         if (tempData) newData.id = Object.keys(tempData).length + 1;
         else newData.id = 1;
 
-        //newData.id = Object.keys(tempData).length + 1;
         console.log("supabase update place query error", err);
         // query the jsonb data from the url
         if (data[0].Reviews === null) tempData = [];
@@ -66,6 +77,10 @@ export default function WriteReviewScreen({ photo, setPhotoConfirmed}){
         // use this function to exit, I will edit later
         setDone();
     }
+
+    React.useEffect(() => {
+      getLocations();
+    }, []);
 
     return (
       <KeyboardAvoidingView
@@ -103,7 +118,8 @@ export default function WriteReviewScreen({ photo, setPhotoConfirmed}){
                 backgroundColor: "rgba(0,0,0,0.5)",
               }}
             >
-                <Text style={{color:'white', fontSize:15}}>{locationName}{'\n'}</Text>
+                {/* <Text style={{color:'white', fontSize:15}}>{locationName}{'\n'}</Text> */}
+              <DropdownComponent places={placesList}/>
                 <Text style={{color:'white', fontSize:25}}>RATING: 
                 <Stars
                     style={{marginBottom:-5}}
