@@ -19,24 +19,29 @@ import DropdownComponent from "../components/Dropdown";
 
 
 
-
-
 export default function WriteReviewScreen({ photo, setPhotoConfirmed}){
     console.log("WriteReviewScreen photo", photo)
     const [rating, setRating] = useState(0);
     const [reviewText, setReviewText] = useState('');
     const [locationName, setLocationName] = useState('Stanford University');
-    const [selectedPlace, setSelectedPlace] = useState('Stanford University');
+    const [selectedPlace, setSelectedPlace] = useState(0);
     const [placesList, setPlacesList] = useState([]);
+    console.log("placesList--", placesList);
 
     const setDone = ()=>{
         console.log('done! navigate back')
     }
 
+    const getSelectedPlace = (id) => {
+      console.log("id: " + id);
+      setSelectedPlace(id);
+    }
+
     const getLocations = async() => {
       try {
-        const {data, err} = await supabase.from('Items').select('name');
+        const {data, err} = await supabase.from('Items').select('id, name');
         console.log("supabase get locations query error", err);
+        console.log("data--", data);
         if (data.length > 0) setPlacesList(data);
       } catch (err) {
         console.log(err);
@@ -46,7 +51,7 @@ export default function WriteReviewScreen({ photo, setPhotoConfirmed}){
     const updatePlace = async(imgUrl, ratingNum, reviewText) => {
       newData = {url: imgUrl, rating: ratingNum, review: reviewText, user: "Ariana Grande", created_at: moment().format('YYYY-MM-DD HH:mm:ss')};
       try {
-        const {data, err} = await supabase.from('Items').select('Reviews').eq('id', 3);
+        const {data, err} = await supabase.from('Items').select('Reviews').eq('id', selectedPlace);
         var tempData = data[0].Reviews;
         console.log(tempData);
 
@@ -60,7 +65,7 @@ export default function WriteReviewScreen({ photo, setPhotoConfirmed}){
         tempData.push(newData);
         const {error} = await supabase.from('Items').update({
           Reviews: tempData
-        }).eq('id', 3);
+        }).eq('id', selectedPlace);
         console.log("supabase update place error", error);
       } catch (err) {
         console.error(err);
@@ -118,8 +123,7 @@ export default function WriteReviewScreen({ photo, setPhotoConfirmed}){
                 backgroundColor: "rgba(0,0,0,0.5)",
               }}
             >
-                {/* <Text style={{color:'white', fontSize:15}}>{locationName}{'\n'}</Text> */}
-              <DropdownComponent places={placesList}/>
+              <DropdownComponent places={placesList} getSelectedPlace={getSelectedPlace}/>
                 <Text style={{color:'white', fontSize:25}}>RATING: 
                 <Stars
                     style={{marginBottom:-5}}
