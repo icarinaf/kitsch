@@ -19,7 +19,7 @@ import DropdownComponent from "../components/Dropdown";
 
 
 
-export default function WriteReviewScreen({ photo, setPhotoConfirmed}){
+export default function WriteReviewScreen({ photo, setPhotoConfirmed, setPreviewVisible}){
     console.log("WriteReviewScreen photo", photo)
     const [rating, setRating] = useState(0);
     const [reviewText, setReviewText] = useState('');
@@ -29,6 +29,8 @@ export default function WriteReviewScreen({ photo, setPhotoConfirmed}){
     console.log("placesList--", placesList);
 
     const setDone = ()=>{
+        setPreviewVisible(false);
+        setPhotoConfirmed(false)
         console.log('done! navigate back')
     }
 

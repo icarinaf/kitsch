@@ -71,6 +71,7 @@ export default function App() {
               photo={capturedImage}
               savePhoto={__savePhoto}
               retakePicture={__retakePicture}
+              setPreviewVisible={setPreviewVisible}
             />
           ) : (
             <Camera
@@ -179,14 +180,14 @@ const styles = StyleSheet.create({
   }
 })
 
-const CameraPreview = ({ photo, retakePicture, savePhoto }) => {
+const CameraPreview = ({ photo, retakePicture, savePhoto, setPreviewVisible }) => {
   console.log("sdsfds", photo)
 
   const [photoConfirmed, setPhotoConfirmed] = useState(false);
 
   console.log(photoConfirmed)
   if (photoConfirmed){
-    return <WriteReviewScreen photo={photo} setPhotoConfirmed={setPhotoConfirmed} />
+    return <WriteReviewScreen photo={photo} setPhotoConfirmed={setPhotoConfirmed} setPreviewVisible={setPreviewVisible} />
   }else{
       return (
 

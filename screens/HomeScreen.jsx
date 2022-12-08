@@ -9,6 +9,13 @@ import { supabase } from '../supabase';
 import React, { useEffect, useState } from 'react';
 import History from '../components/History';
 
+// componentDidMount() {
+//   this.interval = setInterval(() => this.setState({ time: Date.now() }), 1000);
+// }
+// componentWillUnmount() {
+//   clearInterval(this.interval);
+// }
+
 export default function HomeScreen() {
     let questions = [
       {Q: 'How are you feeling today?', A:[{emoji:'🤩', text:'Adventurous!'}, {emoji:'🥱', text:'A bit tired...'}]},
@@ -18,6 +25,8 @@ export default function HomeScreen() {
     const [currQuestion, setCurrQuestion] = useState(0);
 
     const [answers, setAnswers] = useState([])
+
+
 
     const answerQuestion = (answer)=>{
       if (answers.length >= 2){
@@ -57,8 +66,13 @@ export default function HomeScreen() {
         }
     }
 
-    React.useEffect(() => {
+
+    useEffect(() => {
+      const interval = setInterval(() => {
         getPlaces();
+      }, 1000);
+    
+      return () => clearInterval(interval);
     }, []);
 
     console.log('here', answers, Array(answers), answers.map((x, i)=>questions[x].A[i].emoji))
