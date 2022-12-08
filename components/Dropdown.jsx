@@ -13,7 +13,7 @@ const DropdownComponent = (props) => {
   const [isFocus, setIsFocus] = useState(false);
   const [isSelected, setIsSelected] = useState(false);
   const [selectedId, setSelectedId] = useState(0);
-  const data = [];
+  const data = [{label: "ADD LOCATION+", value: 0}];
 
   const createLabels = () => {
     if (places && places.length !== 0) {
