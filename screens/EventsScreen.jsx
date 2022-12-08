@@ -11,17 +11,17 @@ import NotificationPopup from 'react-native-push-notification-popup';
 
 export default function EventsScreen() {
 
-  React.useEffect(() => {
-    this.popup.show({
-      onPress: function() {console.log('Pressed')},
-      // appIconSource: require('./assets/icon.jpg'),
-      appTitle: 'UnCover',
-      timeText: 'Now',
-      title: 'Hello World',
-      body: 'This is a sample message.\nTesting emoji 😀',
-      slideOutTime: 5000
-    });
-  }, []);
+  // React.useEffect(() => {
+  //   this.popup.show({
+  //     onPress: function() {console.log('Pressed')},
+  //     // appIconSource: require('./assets/icon.jpg'),
+  //     appTitle: 'UnCover',
+  //     timeText: 'Now',
+  //     title: 'Hello World',
+  //     body: 'This is a sample message.\nTesting emoji 😀',
+  //     slideOutTime: 5000
+  //   });
+  // }, []);
 
   return (
     <View style={styles.container}>
