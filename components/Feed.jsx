@@ -6,7 +6,7 @@ import { supabase } from "../supabase";
 import React from "react";
 import Price from "./Price";
 
-export default function Feed({itemData, feedOrder}){
+export default function Feed({itemData, feedOrder, tabNavigation}){
     // console.log('in feed,', itemData )
     // console.log('filtering', 
     // feedOrder.map(category=><FeedHorizontal title={category.title} data={itemData.filter(x=>x.category==category.tag)}/>)
@@ -14,7 +14,7 @@ export default function Feed({itemData, feedOrder}){
     // )
     return (
         <View style={styles.container}>
-            {feedOrder.map(category=><FeedHorizontal title={category.title} data={itemData.filter(x=>x.category==category.tag)}/>)}
+            {feedOrder.map(category=><FeedHorizontal tabNavigation={tabNavigation} title={category.title} data={itemData.filter(x=>x.category==category.tag)}/>)}
         </View>
     )
 }
@@ -25,23 +25,23 @@ const styles = StyleSheet.create({
     },
 });
 
-function FeedHorizontal({title, data}){
+function FeedHorizontal({title, data, tabNavigation}){
     // console.log('data in horizon', data, data.length)
     return(
         <View style={{paddingTop:20}}>
             <Text style={{fontSize:30, paddingLeft:20, paddingBottom:10, fontWeight:'bold'}}>{title}</Text>
             <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{paddingLeft:20}}>
-                {data.map(item=> <FeedItem item={item}/>)}
+                {data.map(item=> <FeedItem tabNavigation={tabNavigation} item={item}/>)}
             </ScrollView>
         </View>
     )
 }
 
 
-function FeedItem({item}){
+function FeedItem({item, tabNavigation}){
     const navigation = useNavigation()
     return (
-        <TouchableOpacity style={{paddingRight:20}} onPress={()=>{navigation.navigate('PlaceDetail', item)}}>
+        <TouchableOpacity style={{paddingRight:20}} onPress={()=>{navigation.navigate('PlaceDetail', {tabNavigation:tabNavigation, ...item})}}>
             <Image style={{width:230, height:150, borderRadius:15}} source={{uri:item.thumbnail_url}}/>
             <View style={{padding:5}}>
                 <View style={{flexDirection:'row', justifyContent:'space-between'}}>

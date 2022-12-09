@@ -7,7 +7,7 @@ import Price from '../components/Price';
 
 
 export default function PlaceDetailScreen({navigation, route}) {
-    const {name, thumbnail_url, rating, mileage, price, distance, Reviews} = route.params;
+    const {name, thumbnail_url, rating, mileage, price, distance, Reviews, tabNavigation} = route.params;
     const stars = [];
     for (let i = 1; i <= 5; i++){
         if (i-0.5<=rating) {
@@ -31,7 +31,7 @@ export default function PlaceDetailScreen({navigation, route}) {
                     </Text>
                     <Text>{mileage} mi · {distance} min · <Price value={price}/> · <Text style={{color:"#999", textDecorationLine: 'underline'}}>Get Directions</Text></Text>
                 </View>
-                <TouchableOpacity style={{backgroundColor:'#000', width:70, height:70, justifyContent:'center', alignItems:'center', borderRadius:200}}>
+                <TouchableOpacity onPress={()=>tabNavigation.navigate('Camera')} style={{backgroundColor:'#000', width:70, height:70, justifyContent:'center', alignItems:'center', borderRadius:200}}>
                     <Ionicons name="md-camera-outline" size={40} color="white" />
                 </TouchableOpacity>
             </View>

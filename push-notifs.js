@@ -13,7 +13,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-export default function PushNotifcations() {
+export default function PushNotifcations({tabNavigation}) {
   const [expoPushToken, setExpoPushToken] = useState("");
   const [notification, setNotification] = useState(false);
   const notificationListener = useRef();
@@ -35,6 +35,7 @@ export default function PushNotifcations() {
       Notifications.addNotificationResponseReceivedListener((response) => {
         console.log(response);
         console.log("tapped!");
+        tabNavigation.navigate('Events')
       });
 
     return () => {

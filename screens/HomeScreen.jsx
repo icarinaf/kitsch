@@ -10,6 +10,7 @@ import React, { useEffect, useState } from 'react';
 import History from '../components/History';
 import PushNotifcations from '../push-notifs';
 
+
 // componentDidMount() {
 //   this.interval = setInterval(() => this.setState({ time: Date.now() }), 1000);
 // }
@@ -17,7 +18,9 @@ import PushNotifcations from '../push-notifs';
 //   clearInterval(this.interval);
 // }
 
-export default function HomeScreen() {
+export default function HomeScreen({tabNavigation}) {
+
+
     let questions = [
       {Q: 'How are you feeling today?', A:[{emoji:'🤩', text:'Adventurous!'}, {emoji:'🥱', text:'A bit tired...'}]},
       {Q: 'Do you prefer to stay...', A:[{emoji:'🧗‍♀️', text:'Outdoors'}, {emoji:'🎨', text:'Indoors'}]},
@@ -35,8 +38,13 @@ export default function HomeScreen() {
       }else{
         setAnswers(answers.concat(answer))
       }
-      setCurrQuestion((currQuestion + 1) % 2);
+      // setCurrQuestion((answers.length + 1) % 2);
     }
+
+
+    useEffect(()=>{
+      setCurrQuestion((answers.length ) % 2);
+    }, [answers])
 
 
     const [itemData, setItemData] = React.useState([]);
@@ -61,7 +69,7 @@ export default function HomeScreen() {
         try {
             const {data, error} = await supabase.from('Items').select('*');
             setItemData(data);
-            console.log("supabase error", error);
+            // console.log("supabase error", error);
         } catch (err) {
             console.error(err);
         }
@@ -78,18 +86,22 @@ export default function HomeScreen() {
 
     console.log('here', answers, Array(answers), answers.map((x, i)=>questions[x].A[i].emoji))
 
+    const deleteHistory = (i)=>{
+      setAnswers(answers.slice(0, i))
+    }
+
 
   return (
     <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
       <Questions question={questions[currQuestion]} setAnswer={answerQuestion}/>
       <View style={{flexDirection:'row', paddingTop:5, paddingLeft:20, justifyContent:'flex-start'}}>
-        {answers.map((x, i)=><><History emoji={questions[i].A[x].emoji} answer={questions[i].A[x].text}/><Text>{' '}</Text></>)}
+        {answers.map((x, i)=><><History i={i} deleteHistory={deleteHistory} emoji={questions[i].A[x].emoji} answer={questions[i].A[x].text}/><Text>{' '}</Text></>)}
       </View>
       <View style={{paddingLeft:20, width:440}}>
         <Searchbar/>
       </View>
-      <Feed feedOrder={feedOrder} itemData={itemData}/>
-      <PushNotifcations />
+      <Feed feedOrder={feedOrder} tabNavigation={tabNavigation} itemData={itemData}/>
+      <PushNotifcations tabNavigation={tabNavigation}/>
     </ScrollView>
   );
 }

@@ -26,6 +26,8 @@ import { Ionicons } from '@expo/vector-icons';
 import PlaceDetailScreen from '../screens/PlaceDetailScreen';
 import ReviewDetailScreen from '../screens/ReviewDetailSceen';
 
+
+
 import { LogBox } from 'react-native';
 LogBox.ignoreAllLogs();//Ignore all log notifications
 
@@ -57,10 +59,10 @@ function RootNavigator() {
   );
 }
 
-function FeedNavigator(){
+function FeedNavigator({navigation}){
   return (
     <Stack.Navigator>
-    <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+    <Stack.Screen name="Home" component={()=><HomeScreen tabNavigation={navigation} />} options={{ headerShown: false }} />
     <Stack.Screen name="PlaceDetail" component={PlaceDetailScreen} options={{ headerShown: false }} />
     <Stack.Screen name="reviewDetail" component={ReviewDetailScreen} options={{ headerShown: false }} />
   </Stack.Navigator>
@@ -76,8 +78,8 @@ function FeedNavigator(){
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
+  
   const colorScheme = useColorScheme();
-
   return (
     <BottomTab.Navigator
       initialRouteName="Home"
