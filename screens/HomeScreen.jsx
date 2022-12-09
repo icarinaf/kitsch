@@ -8,6 +8,7 @@ import { RootTabScreenProps } from '../types';
 import { supabase } from '../supabase';
 import React, { useEffect, useState } from 'react';
 import History from '../components/History';
+import PushNotifcations from '../push-notifs';
 
 // componentDidMount() {
 //   this.interval = setInterval(() => this.setState({ time: Date.now() }), 1000);
@@ -88,6 +89,7 @@ export default function HomeScreen() {
         <Searchbar/>
       </View>
       <Feed feedOrder={feedOrder} itemData={itemData}/>
+      <PushNotifcations />
     </ScrollView>
   );
 }
