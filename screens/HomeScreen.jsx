@@ -9,6 +9,7 @@ import { supabase } from '../supabase';
 import React, { useEffect, useState } from 'react';
 import History from '../components/History';
 import PushNotifcations from '../push-notifs';
+import Colors from '../constants/Colors';
 
 
 // componentDidMount() {
@@ -93,7 +94,6 @@ export default function HomeScreen({tabNavigation}) {
 
   return (
     <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
-      <Questions question={questions[currQuestion]} setAnswer={answerQuestion}/>
       <View style={{flexDirection:'row', paddingTop:5, paddingLeft:20, justifyContent:'flex-start'}}>
         {answers.map((x, i)=><><History i={i} deleteHistory={deleteHistory} emoji={questions[i].A[x].emoji} answer={questions[i].A[x].text}/><Text>{' '}</Text></>)}
       </View>
@@ -101,7 +101,7 @@ export default function HomeScreen({tabNavigation}) {
         <Searchbar/>
       </View>
       <Feed feedOrder={feedOrder} tabNavigation={tabNavigation} itemData={itemData}/>
-      <PushNotifcations tabNavigation={tabNavigation}/>
+      {/* r */}
     </ScrollView>
   );
 }
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'flex-start',
     justifyContent: 'flex-start',
-    backgroundColor:'white',
+    backgroundColor: Colors.light.background,
   },
   title: {
     fontSize: 20,

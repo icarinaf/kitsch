@@ -1,10 +1,10 @@
 import { TextInput, StyleSheet, Image, View, ScrollView, Text, RecyclerViewBackedScrollView, TouchableOpacity} from "react-native";
 import { Ionicons } from '@expo/vector-icons'; 
 import { useNavigation } from "@react-navigation/native";
-
 import { supabase } from "../supabase";
 import React from "react";
 import Price from "./Price";
+import Colors from "../constants/Colors";
 
 export default function Feed({itemData, feedOrder, tabNavigation}){
     // console.log('in feed,', itemData )
@@ -41,14 +41,16 @@ function FeedHorizontal({title, data, tabNavigation}){
 function FeedItem({item, tabNavigation}){
     const navigation = useNavigation()
     return (
-        <TouchableOpacity style={{paddingRight:20}} onPress={()=>{navigation.navigate('PlaceDetail', {tabNavigation:tabNavigation, ...item})}}>
-            <Image style={{width:230, height:150, borderRadius:15}} source={{uri:item.thumbnail_url}}/>
-            <View style={{padding:5}}>
-                <View style={{flexDirection:'row', justifyContent:'space-between'}}>
-                    <Text style={{fontSize:17, fontWeight:'bold'}}>{item.name}</Text>
-                    <Text><Ionicons name="md-star" size={15} color="orange" />{item.rating}/5</Text>
+        <TouchableOpacity style={{paddingRight:10}} onPress={()=>{navigation.navigate('PlaceDetail', {tabNavigation:tabNavigation, ...item})}}>
+            <View style={{borderWidth: 10, borderColor: Colors.dark.background}}>
+                <Image style={{width:230, height:150, borderRadius:15}} source={{uri:item.thumbnail_url}}/>
+                <View style={{padding:5}}>
+                    <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                        <Text style={{fontSize:17, fontWeight:'bold'}}>{item.name}</Text>
+                        <Text><Ionicons name="md-star" size={15} color="orange" />{item.rating}/5</Text>
+                    </View>
+                    <Text>{item.mileage} mi ·{parseInt(item.distance)} min · <Price value={item.price}/></Text>
                 </View>
-                <Text>{item.mileage} mi ·{parseInt(item.distance)} min · <Price value={item.price}/></Text>
             </View>
         </TouchableOpacity>
     )
