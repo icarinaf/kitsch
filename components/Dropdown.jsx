@@ -46,7 +46,7 @@ const DropdownComponent = (props) => {
         maxHeight={300}
         labelField="label"
         valueField="value"
-        placeholder="Choose Location ..."
+        placeholder="Medium"
         searchPlaceholder="Search..."
         value={value}
         onFocus={() => setIsFocus(true)}
@@ -58,9 +58,6 @@ const DropdownComponent = (props) => {
           getSelectedPlace(item.value);
           //console.log("item value: " + item.value);
         }}
-        renderLeftIcon={() => (
-            <Ionicons style={styles.icon} name={isSelected ? "location" : "location-outline"} size={20}/>
-          )}
       />
     </View>
   );
@@ -70,9 +67,10 @@ export default DropdownComponent;
 
 const styles = StyleSheet.create({
   container: {
+    margin: 15,
     backgroundColor: 'white',
     borderRadius: 8,
-    width: '50%',
+    width: 100,
     marginBottom: 4,
   },
   dropdown: {

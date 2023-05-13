@@ -10,6 +10,8 @@ import React, { useEffect, useState } from 'react';
 import History from '../components/History';
 import PushNotifcations from '../push-notifs';
 import Colors from '../constants/Colors';
+import DropdownComponent from "../components/Dropdown";
+
 
 
 // componentDidMount() {
@@ -20,51 +22,31 @@ import Colors from '../constants/Colors';
 // }
 
 export default function HomeScreen({tabNavigation}) {
-
-
-    let questions = [
-      {Q: 'How are you feeling today?', A:[{emoji:'🤩', text:'Adventurous!'}, {emoji:'🥱', text:'A bit tired...'}]},
-      {Q: 'Do you prefer to stay...', A:[{emoji:'🧗‍♀️', text:'Outdoors'}, {emoji:'🎨', text:'Indoors'}]},
-
-    ]
-    const [currQuestion, setCurrQuestion] = useState(0);
-
-    const [answers, setAnswers] = useState([])
-
-
-
-    const answerQuestion = (answer)=>{
-      if (answers.length >= 2){
-        setAnswers([answer]);
-      }else{
-        setAnswers(answers.concat(answer))
-      }
-      // setCurrQuestion((answers.length + 1) % 2);
-    }
-
-
-    useEffect(()=>{
-      setCurrQuestion((answers.length ) % 2);
-    }, [answers])
-
-
     const [itemData, setItemData] = React.useState([]);
     console.log('itemData --', itemData)
     const [feedOrder, setFeedOrder] = useState([{title:'Best Eats', tag:'restaurant'}, {title:'Explore Places', tag:'place'}, {title:'Shopping and Malls', tag:'shopping'}, {title:'Fun Things', tag:'activity'}]);
+    const mediums = ["pottery", "ceramics", "oil painting"];
+    const [selectedMedium, setSelectedMedium] = useState(0);
 
-    useEffect(()=>{
-      console.log(answers)
-      // reorganize feed
-      if (answers.length == 0){
-        setFeedOrder([{title:'Best Eats', tag:'restaurant'}, {title:'Explore Places', tag:'place'}, {title:'Shopping and Malls', tag:'shopping'}, {title:'Fun Things', tag:'activity'}]);
-      }else if (answers.length == 1){
-        if (answers[0] == 0){
-          setFeedOrder([{title:'Explore Places', tag:'place'}, {title:'Fun Things', tag:'activity'}, {title:'Best Eats', tag:'restaurant'}, {title:'Shopping and Malls', tag:'shopping'}, ])
-        }else{
-          setFeedOrder([{title:'Shopping and Malls', tag:'shopping'}, {title:'Best Eats', tag:'restaurant'}, {title:'Fun Things', tag:'activity'},{title:'Explore Places', tag:'place'}, ])
-        }
-      }
-    }, [answers])
+    // re-organizing feed --> helpful to reorganize data
+    // useEffect(()=>{
+    //   console.log(answers)
+    //   // reorganize feed
+    //   if (answers.length == 0){
+    //     setFeedOrder([{title:'Best Eats', tag:'restaurant'}, {title:'Explore Places', tag:'place'}, {title:'Shopping and Malls', tag:'shopping'}, {title:'Fun Things', tag:'activity'}]);
+    //   }else if (answers.length == 1){
+    //     if (answers[0] == 0){
+    //       setFeedOrder([{title:'Explore Places', tag:'place'}, {title:'Fun Things', tag:'activity'}, {title:'Best Eats', tag:'restaurant'}, {title:'Shopping and Malls', tag:'shopping'}, ])
+    //     }else{
+    //       setFeedOrder([{title:'Shopping and Malls', tag:'shopping'}, {title:'Best Eats', tag:'restaurant'}, {title:'Fun Things', tag:'activity'},{title:'Explore Places', tag:'place'}, ])
+    //     }
+    //   }
+    // }, [answers])
+
+    const getSelectedMedium = (id) => {
+      console.log("id: " + id);
+      setSelectedMedium(id);
+    }
 
     const getPlaces = async() => {
         try {
@@ -85,21 +67,24 @@ export default function HomeScreen({tabNavigation}) {
       return () => clearInterval(interval);
     }, []);
 
-    console.log('here', answers, Array(answers), answers.map((x, i)=>questions[x].A[i].emoji))
 
-    const deleteHistory = (i)=>{
-      setAnswers(answers.slice(0, i))
-    }
+    // const deleteHistory = (i)=>{
+    //   setAnswers(answers.slice(0, i))
+    // }
 
 
   return (
     <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
-      <View style={{flexDirection:'row', paddingTop:5, paddingLeft:20, justifyContent:'flex-start'}}>
-        {answers.map((x, i)=><><History i={i} deleteHistory={deleteHistory} emoji={questions[i].A[x].emoji} answer={questions[i].A[x].text}/><Text>{' '}</Text></>)}
+      <View style={{paddingTop: 50, width: '100%'}}>
+        <Text style={{fontSize: 50, textAlign: "center", fontWeight: 'bold'}}> KITSCH</Text>
       </View>
-      <View style={{paddingLeft:20, width:440}}>
-        <Searchbar/>
+      <View style={{width:'80%', alignSelf:'center'}}>
+        <Searchbar />
       </View>
+      <View style={{flexDirection:'row'}}>
+        <DropdownComponent mediums={mediums} getSelectedMedium={getSelectedMedium}/>
+      </View>
+
       <Feed feedOrder={feedOrder} tabNavigation={tabNavigation} itemData={itemData}/>
       {/* r */}
     </ScrollView>
@@ -115,10 +100,5 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
   },
 });
