@@ -18,19 +18,13 @@ export default function Feed({itemData, feedOrder, tabNavigation}){
         </View>
     )
 }
-const styles = StyleSheet.create({
-    container: {
-        width:'100%', 
-        paddingTop:20,
-    },
-});
+
 
 function FeedHorizontal({title, data, tabNavigation}){
     // console.log('data in horizon', data, data.length)
     return(
-        <View style={{paddingTop:20}}>
-            <Text style={{fontSize:30, paddingLeft:20, paddingBottom:10, fontWeight:'bold'}}>{title}</Text>
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{paddingLeft:20}}>
+        <View style={{paddingTop:5}}>
+            <ScrollView>
                 {data.map(item=> <FeedItem tabNavigation={tabNavigation} item={item}/>)}
             </ScrollView>
         </View>
@@ -41,11 +35,11 @@ function FeedHorizontal({title, data, tabNavigation}){
 function FeedItem({item, tabNavigation}){
     const navigation = useNavigation()
     return (
-        <TouchableOpacity style={{paddingRight:10}} onPress={()=>{navigation.navigate('PlaceDetail', {tabNavigation:tabNavigation, ...item})}}>
+        <TouchableOpacity style={styles.feedItem} onPress={()=>{navigation.navigate('PlaceDetail', {tabNavigation:tabNavigation, ...item})}}>
             <View style={{borderWidth: 10, borderColor: Colors.dark.background}}>
-                <Image style={{width:230, height:150, borderRadius:15}} source={{uri:item.thumbnail_url}}/>
+                <Image style={{width:'100%', height:150, borderRadius:15}} source={{uri:item.thumbnail_url}}/>
                 <View style={{padding:5}}>
-                    <View style={{flexDirection:'row', justifyContent:'space-between'}}>
+                    <View style={{flexDirection:'row'}}>
                         <Text style={{fontSize:17, fontWeight:'bold'}}>{item.name}</Text>
                         <Text><Ionicons name="md-star" size={15} color="orange" />{item.rating}/5</Text>
                     </View>
@@ -55,3 +49,14 @@ function FeedItem({item, tabNavigation}){
         </TouchableOpacity>
     )
 }
+
+const styles = StyleSheet.create({
+    container: {
+        width:'88%', 
+        paddingTop:20,
+        alignSelf:'center'
+    },
+    feedItem: {
+        paddingBottom: 10,
+    }
+});

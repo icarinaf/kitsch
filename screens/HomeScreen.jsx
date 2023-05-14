@@ -1,4 +1,4 @@
-import {Text, View,  StyleSheet, ScrollView } from 'react-native';
+import {Image, Text, View,  StyleSheet, ScrollView } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import Feed from '../components/Feed';
@@ -11,7 +11,6 @@ import History from '../components/History';
 import PushNotifcations from '../push-notifs';
 import Colors from '../constants/Colors';
 import DropdownComponent from "../components/Dropdown";
-
 
 
 // componentDidMount() {
@@ -75,8 +74,8 @@ export default function HomeScreen({tabNavigation}) {
 
   return (
     <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
-      <View style={{paddingTop: 50, width: '100%'}}>
-        <Text style={{fontSize: 50, textAlign: "center", fontWeight: 'bold'}}> KITSCH</Text>
+      <View style={{marginTop: 50, marginBottom: 10, width: '50%', height: 50, alignItems: 'center', alignSelf:'center'}}>
+        <Image style={{width: '100%', height: '100%'}} source={require('../kitsch_logo.png')} />
       </View>
       <View style={{width:'80%', alignSelf:'center'}}>
         <Searchbar />

@@ -119,7 +119,7 @@ function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <MaterialCommunityIcons name="calendar-blank" size={36} style={{marginBottom:-10}} color={color} />,
         }}
       />
-      <BottomTab.Screen
+      {/* <BottomTab.Screen
         name="Camera"
         component={CameraScreen}
         options={{
@@ -127,7 +127,7 @@ function BottomTabNavigator() {
           headerShown: false,
           tabBarIcon: ({ color }) =>  <Ionicons name="md-camera-outline" size={40} style={{marginBottom:-10}} color={color} />,
         }}
-      />
+      /> */}
       <BottomTab.Screen
         name="Map"
         component={MapScreen}
