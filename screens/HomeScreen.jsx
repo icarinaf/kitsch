@@ -74,7 +74,7 @@ export default function HomeScreen({tabNavigation}) {
 
   return (
     <ScrollView contentContainerStyle={styles.container} showsVerticalScrollIndicator={false}>
-      <View style={{marginTop: 50, marginBottom: 10, width: '50%', height: 50, alignItems: 'center', alignSelf:'center'}}>
+      <View style={{marginTop: 50, marginBottom: 5, width: '50%', height: 50, alignItems: 'center', alignSelf:'center'}}>
         <Image style={{width: '100%', height: '100%'}} source={require('../kitsch_logo.png')} />
       </View>
       <View style={{width:'80%', alignSelf:'center'}}>

@@ -23,7 +23,7 @@ export default function Feed({itemData, feedOrder, tabNavigation}){
 function FeedHorizontal({title, data, tabNavigation}){
     // console.log('data in horizon', data, data.length)
     return(
-        <View style={{paddingTop:5}}>
+        <View>
             <ScrollView>
                 {data.map(item=> <FeedItem tabNavigation={tabNavigation} item={item}/>)}
             </ScrollView>
@@ -36,14 +36,14 @@ function FeedItem({item, tabNavigation}){
     const navigation = useNavigation()
     return (
         <TouchableOpacity style={styles.feedItem} onPress={()=>{navigation.navigate('PlaceDetail', {tabNavigation:tabNavigation, ...item})}}>
-            <View style={{borderWidth: 10, borderColor: Colors.dark.background}}>
-                <Image style={{width:'100%', height:150, borderRadius:15}} source={{uri:item.thumbnail_url}}/>
+            <View style={{borderColor: Colors.dark.background}}>
+                <Image style={{width:'100%', height:250, marginBottom: 10}} source={{uri:item.thumbnail_url}}/>
                 <View style={{padding:5}}>
                     <View style={{flexDirection:'row'}}>
-                        <Text style={{fontSize:17, fontWeight:'bold'}}>{item.name}</Text>
-                        <Text><Ionicons name="md-star" size={15} color="orange" />{item.rating}/5</Text>
+                        <Text style={styles.username}>{item.name}</Text>
+                        <Text style={styles.itemText} ><Ionicons name="md-star" size={15} color="orange" />{item.rating}/5</Text>
                     </View>
-                    <Text>{item.mileage} mi ·{parseInt(item.distance)} min · <Price value={item.price}/></Text>
+                    <Text style={styles.itemText}>{item.mileage} mi ·{parseInt(item.distance)} min · <Price value={item.price}/></Text>
                 </View>
             </View>
         </TouchableOpacity>
@@ -57,6 +57,18 @@ const styles = StyleSheet.create({
         alignSelf:'center'
     },
     feedItem: {
-        paddingBottom: 10,
+        padding: 13,
+        marginBottom: 10,
+        backgroundColor: Colors.dark.background,
+        borderRadius: 10,
+    },
+    username: {
+        color: 'white',
+        fontSize:17, 
+        fontWeight:'bold'
+    },
+    itemText: {
+        color: 'white',
+        fontSize:17, 
     }
 });
