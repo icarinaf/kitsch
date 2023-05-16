@@ -15,15 +15,18 @@ import React from "react";
 import Price from "./Price";
 import Colors from "../constants/Colors";
 
-export default function Feed({ itemData, feedOrder, tabNavigation }) {
-  console.log("in feed,", itemData);
+export default function Feed({ feedData, feedOrder, tabNavigation, userData }) {
+  //console.log("in feed,", itemData);
   // console.log('filtering',
   // feedOrder.map(category=><FeedHorizontal title={category.title} data={itemData.filter(x=>x.category==category.tag)}/>)
-
+  //console.log(feedData);
   // )
   return (
     <View style={styles.container}>
-      <FeedVertical tabNavigation={tabNavigation} data={itemData} />
+      <Text>
+        Username: {userData[0].username}, Password: {userData[0].password}
+      </Text>
+      <FeedVertical tabNavigation={tabNavigation} data={feedData} />
       {/* {feedOrder.map((category) => (
         <FeedVertical
           tabNavigation={tabNavigation}
@@ -66,7 +69,7 @@ function FeedItem({ item, tabNavigation }) {
         />
         <View style={{ padding: 5 }}>
           <View style={{ flexDirection: "row" }}>
-            <Text style={styles.username}>{item.name}</Text>
+            <Text style={styles.username}>{item.username}</Text>
             <Text style={styles.itemText}>
               <Ionicons name='md-star' size={15} color='orange' />
               {item.for_sale}/5

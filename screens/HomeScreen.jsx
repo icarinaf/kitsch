@@ -20,8 +20,9 @@ import DropdownComponent from "../components/Dropdown";
 // }
 
 export default function HomeScreen({ tabNavigation }) {
-  const [itemData, setItemData] = React.useState([]);
-  console.log("itemData --", itemData);
+  const [feedData, setFeedData] = React.useState([]);
+  const [userData, setUserData] = React.useState([]);
+  // console.log("itemData --", itemData);
   // const [feedOrder, setFeedOrder] = useState([
   //   { title: "Best Eats", tag: "restaurant" },
   //   { title: "Explore Places", tag: "place" },
@@ -47,15 +48,23 @@ export default function HomeScreen({ tabNavigation }) {
   // }, [answers])
 
   const getSelectedMedium = (id) => {
-    console.log("id: " + id);
+    //console.log("id: " + id);
     setSelectedMedium(id);
   };
 
   const getFeedItems = async () => {
     try {
       const { data, error } = await supabase.from("feed_items").select("*");
-      setItemData(data);
-      console.log("supabase error", error);
+      setFeedData(data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const getUserData = async () => {
+    try {
+      const { data, error } = await supabase.from("user_data").select("*");
+      setUserData(data);
     } catch (err) {
       console.error(err);
     }
@@ -64,6 +73,7 @@ export default function HomeScreen({ tabNavigation }) {
   useEffect(() => {
     const interval = setInterval(() => {
       getFeedItems();
+      getUserData();
     }, 1000);
 
     return () => clearInterval(interval);
@@ -105,7 +115,8 @@ export default function HomeScreen({ tabNavigation }) {
         <Feed
           // feedOrder={feedOrder}
           tabNavigation={tabNavigation}
-          itemData={itemData}
+          feedData={feedData}
+          userData={userData}
         />
         {/* r */}
       </ScrollView>
