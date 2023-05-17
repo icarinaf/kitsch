@@ -48,6 +48,9 @@ export default function Feed({ feedData, feedOrder, tabNavigation, userData }) {
 
   return (
     <View style={styles.container}>
+      <Text>
+        Username: {userData[0].username}, Password: {userData[0].password}
+      </Text>
       <FeedVertical
         tabNavigation={tabNavigation}
         data={feedData}
@@ -114,9 +117,6 @@ function FeedItem({
       }}>
       <View style={{ borderColor: Colors.dark.background }}>
         <Text style={styles.itemText}>{likes_status}</Text>
-        <Text style={styles.itemText}>
-          Username: {userData[0].username}, Password: {userData[0].password}
-        </Text>
         <Image
           style={{ width: "100%", height: 250, marginBottom: 10 }}
           source={{ uri: item.image_uri }}
@@ -132,9 +132,9 @@ function FeedItem({
           <Text style={styles.username}>Comments: </Text>
           <Text style={styles.itemText}>
             {" "}
-            {userData[0].username} commented: {item.comments[0].comment} at{" "}
-            {item.comments[0].created_at}{" "}
+            {userData[0].username} commented: {item.comments[0].comment}
           </Text>
+          <Text style={styles.itemText}>at {item.comments[0].created_at} </Text>
           {/* <Text style={styles.itemText}>
             {item.mileage} mi ·{parseInt(item.distance)} min ·{" "}
             <Price value={item.price} />

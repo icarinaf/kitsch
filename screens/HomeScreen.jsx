@@ -111,7 +111,6 @@ export default function HomeScreen({ tabNavigation }) {
             getSelectedMedium={getSelectedMedium}
           />
         </View>
-
         <Feed
           // feedOrder={feedOrder}
           tabNavigation={tabNavigation}
