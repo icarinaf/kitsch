@@ -3,39 +3,49 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { FontAwesome } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import * as React from 'react';
-import { ColorSchemeName, Pressable } from 'react-native';
+import { FontAwesome } from "@expo/vector-icons";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import {
+  NavigationContainer,
+  DefaultTheme,
+  DarkTheme,
+} from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import * as React from "react";
+import { ColorSchemeName, Pressable } from "react-native";
 
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
-import ModalScreen from '../screens/ModalScreen';
-import NotFoundScreen from '../screens/NotFoundScreen';
-import HomeScreen from '../screens/HomeScreen';
-import EventsScreen from '../screens/EventsScreen';
-import CameraScreen from '../screens/CameraScreen';
-import MapScreen from '../screens/MapScreen';
-import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
-import LinkingConfiguration from './LinkingConfiguration';
-import { MaterialCommunityIcons } from '@expo/vector-icons'; 
-import { Ionicons } from '@expo/vector-icons'; 
+import Colors from "../constants/Colors";
+import useColorScheme from "../hooks/useColorScheme";
+import ModalScreen from "../screens/ModalScreen";
+import NotFoundScreen from "../screens/NotFoundScreen";
+import HomeScreen from "../screens/HomeScreen";
+import EventsScreen from "../screens/EventsScreen";
+import CameraScreen from "../screens/CameraScreen";
+import MapScreen from "../screens/MapScreen";
+import {
+  RootStackParamList,
+  RootTabParamList,
+  RootTabScreenProps,
+} from "../types";
+import LinkingConfiguration from "./LinkingConfiguration";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
-import PlaceDetailScreen from '../screens/PlaceDetailScreen';
-import ReviewDetailScreen from '../screens/ReviewDetailSceen';
+import PlaceDetailScreen from "../screens/PlaceDetailScreen";
+import ReviewDetailScreen from "../screens/ReviewDetailSceen";
 
+import { LogBox } from "react-native";
+LogBox.ignoreAllLogs(); //Ignore all log notifications
 
-
-import { LogBox } from 'react-native';
-LogBox.ignoreAllLogs();//Ignore all log notifications
-
-export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+export default function Navigation({
+  colorScheme,
+}: {
+  colorScheme: ColorSchemeName;
+}) {
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
-      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
       <RootNavigator />
     </NavigationContainer>
   );
@@ -50,26 +60,44 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-      <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
+      <Stack.Screen
+        name='Root'
+        component={BottomTabNavigator}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='NotFound'
+        component={NotFoundScreen}
+        options={{ title: "Oops!" }}
+      />
+      <Stack.Group screenOptions={{ presentation: "modal" }}>
+        <Stack.Screen name='Modal' component={ModalScreen} />
       </Stack.Group>
     </Stack.Navigator>
   );
 }
 
-function FeedNavigator({navigation}){
+function FeedNavigator({ navigation }) {
   return (
     <Stack.Navigator>
-    <Stack.Screen name="Home" component={()=><HomeScreen tabNavigation={navigation} />} options={{ headerShown: false }} />
-    <Stack.Screen name="PlaceDetail" component={PlaceDetailScreen} options={{ headerShown: false }} />
-    <Stack.Screen name="reviewDetail" component={ReviewDetailScreen} options={{ headerShown: false }} />
-  </Stack.Navigator>
-  )
+      <Stack.Screen
+        name='Home'
+        component={() => <HomeScreen tabNavigation={navigation} />}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='PlaceDetail'
+        component={PlaceDetailScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name='reviewDetail'
+        component={ReviewDetailScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
 }
-
-
 
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
@@ -78,30 +106,36 @@ function FeedNavigator({navigation}){
 const BottomTab = createBottomTabNavigator<RootTabParamList>();
 
 function BottomTabNavigator() {
-  
   const colorScheme = useColorScheme();
   return (
     <BottomTab.Navigator
-      initialRouteName="Home"
+      initialRouteName='Home'
       screenOptions={{
-        tabBarActiveTintColor: '#8F30A1',//Colors[colorScheme].tint,
-        tabBarInactiveTintColor: '#000',
+        tabBarActiveTintColor: "#8F30A1", //Colors[colorScheme].tint,
+        tabBarInactiveTintColor: "#000",
       }}>
       <BottomTab.Screen
-        name="HomeStack"
+        name='HomeStack'
         component={FeedNavigator}
-        options={({ navigation }: RootTabScreenProps<'Home'>) => ({
-          title: 'Home',
+        options={({ navigation }: RootTabScreenProps<"Home">) => ({
+          title: "Home",
           headerShown: false,
-          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="home-outline" size={40}  style={{marginBottom:-10}} color={color} />,
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name='home-outline'
+              size={40}
+              style={{ marginBottom: -10 }}
+              color={color}
+            />
+          ),
           headerRight: () => (
             <Pressable
-              onPress={() => navigation.navigate('Modal')}
+              onPress={() => navigation.navigate("Modal")}
               style={({ pressed }) => ({
                 opacity: pressed ? 0.5 : 1,
               })}>
               <FontAwesome
-                name="info-circle"
+                name='info-circle'
                 size={25}
                 color={Colors[colorScheme].text}
                 style={{ marginRight: 15 }}
@@ -111,12 +145,19 @@ function BottomTabNavigator() {
         })}
       />
       <BottomTab.Screen
-        name="Events"
+        name='Events'
         component={EventsScreen}
         options={{
-          title: 'Events',
+          title: "Events",
           headerShown: false,
-          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="calendar-blank" size={36} style={{marginBottom:-10}} color={color} />,
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name='calendar-blank'
+              size={36}
+              style={{ marginBottom: -10 }}
+              color={color}
+            />
+          ),
         }}
       />
       {/* <BottomTab.Screen
@@ -129,12 +170,19 @@ function BottomTabNavigator() {
         }}
       /> */}
       <BottomTab.Screen
-        name="Map"
+        name='Map'
         component={MapScreen}
         options={{
-          title: 'Map',
+          title: "Map",
           headerShown: false,
-          tabBarIcon: ({ color }) => <MaterialCommunityIcons name="map-marker-outline" size={36} style={{marginBottom:-10}} color={color} />,
+          tabBarIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name='map-marker-outline'
+              size={36}
+              style={{ marginBottom: -10 }}
+              color={color}
+            />
+          ),
         }}
       />
     </BottomTab.Navigator>
@@ -145,7 +193,7 @@ function BottomTabNavigator() {
  * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
  */
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
+  name: React.ComponentProps<typeof FontAwesome>["name"];
   color: string;
 }) {
   return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;

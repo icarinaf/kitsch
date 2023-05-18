@@ -22,10 +22,8 @@ export default function Feed({ feedData, feedOrder, tabNavigation, userData }) {
   // feedOrder.map(category=><FeedHorizontal title={category.title} data={itemData.filter(x=>x.category==category.tag)}/>)
   //console.log(feedData);
   // )
-  //console.log(userData);
   //console.log(likes);
-  console.log(likes[0]);
-
+  // console.log(likes[0]);
   const getLikes = async () => {
     try {
       const { data, error } = await supabase
@@ -48,9 +46,14 @@ export default function Feed({ feedData, feedOrder, tabNavigation, userData }) {
 
   return (
     <View style={styles.container}>
-      <Text>
-        Username: {userData[0].username}, Password: {userData[0].password}
-      </Text>
+      <Text style={{ fontWeight: "bold" }}>Current Users: </Text>
+      {userData.length > 0 && (
+        <Text>
+          Username: {userData[0].username}, Password: {userData[0].password}{" "}
+          {"\n"}
+          Username: {userData[1].username}, Password: {userData[1].password}
+        </Text>
+      )}
       <FeedVertical
         tabNavigation={tabNavigation}
         data={feedData}
@@ -75,7 +78,6 @@ function FeedVertical({
   likes = { likes },
   userData = { userData },
 }) {
-  // console.log('data in horizon', data, data.length)
   return (
     <View>
       <ScrollView>
@@ -105,7 +107,7 @@ function FeedItem({
       " was liked by user #" +
       likes[item.id - 1].user_id
     : "there are no likes for this post";
-  console.log(item.comments[0]);
+  //console.log(item.comments[0]);
   return (
     <TouchableOpacity
       style={styles.feedItem}
@@ -130,11 +132,14 @@ function FeedItem({
             </Text> */}
           </View>
           <Text style={styles.username}>Comments: </Text>
-          <Text style={styles.itemText}>
-            {" "}
-            {userData[0].username} commented: {item.comments[0].comment}
-          </Text>
+          {userData.length > 0 && (
+            <Text style={styles.itemText}>
+              {" "}
+              {userData[0].username} commented: {item.comments[0].comment}
+            </Text>
+          )}
           <Text style={styles.itemText}>at {item.comments[0].created_at} </Text>
+
           {/* <Text style={styles.itemText}>
             {item.mileage} mi ·{parseInt(item.distance)} min ·{" "}
             <Price value={item.price} />

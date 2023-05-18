@@ -22,6 +22,10 @@ import DropdownComponent from "../components/Dropdown";
 export default function HomeScreen({ tabNavigation }) {
   const [feedData, setFeedData] = React.useState([]);
   const [userData, setUserData] = React.useState([]);
+  const [messages, setMessagesData] = React.useState([]);
+  const [threads, setThreadData] = React.useState([]);
+  const mediums = ["pottery", "ceramics", "oil painting"];
+  const [selectedMedium, setSelectedMedium] = useState(0);
   // console.log("itemData --", itemData);
   // const [feedOrder, setFeedOrder] = useState([
   //   { title: "Best Eats", tag: "restaurant" },
@@ -29,8 +33,6 @@ export default function HomeScreen({ tabNavigation }) {
   //   { title: "Shopping and Malls", tag: "shopping" },
   //   { title: "Fun Things", tag: "activity" },
   // ]);
-  const mediums = ["pottery", "ceramics", "oil painting"];
-  const [selectedMedium, setSelectedMedium] = useState(0);
 
   // re-organizing feed --> helpful to reorganize data
   // useEffect(()=>{
@@ -46,9 +48,9 @@ export default function HomeScreen({ tabNavigation }) {
   //     }
   //   }
   // }, [answers])
+  if (threads.length > 0) console.log(threads[0].thread[0]);
 
   const getSelectedMedium = (id) => {
-    //console.log("id: " + id);
     setSelectedMedium(id);
   };
 
@@ -70,10 +72,30 @@ export default function HomeScreen({ tabNavigation }) {
     }
   };
 
+  const getMessagesThread = async () => {
+    try {
+      const { data, error } = await supabase.from("threads").select("*");
+      setThreadData(data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const getMessages = async () => {
+    try {
+      const { data, error } = await supabase.from("messages").select("*");
+      setMessagesData(data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
     const interval = setInterval(() => {
       getFeedItems();
       getUserData();
+      getMessages();
+      getMessagesThread();
     }, 1000);
 
     return () => clearInterval(interval);
@@ -111,6 +133,27 @@ export default function HomeScreen({ tabNavigation }) {
             getSelectedMedium={getSelectedMedium}
           />
         </View>
+        <Text style={{ fontWeight: "bold", marginLeft: 10 }}>
+          Here is the current message thread:
+        </Text>
+        {threads.length > 0 && (
+          <Text style={{ marginLeft: 10 }}>
+            User #{threads[0].thread[0].user_id + 1}:{" "}
+            {threads[0].thread[0].message}
+            <Text style={{ color: "gray" }}>
+              {" "}
+              at {threads[0].thread[0].time}
+              {"\n"}
+            </Text>
+            User #{threads[0].thread[1].user_id + 1}:{" "}
+            {threads[0].thread[1].message}
+            <Text style={{ color: "gray" }}>
+              {" "}
+              at {threads[0].thread[1].time}
+              {"\n"}
+            </Text>
+          </Text>
+        )}
         <Feed
           // feedOrder={feedOrder}
           tabNavigation={tabNavigation}
